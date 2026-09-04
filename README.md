@@ -2,46 +2,70 @@
 
 A **Trello-inspired task management REST API** built with **Django REST Framework (DRF)**.
 
-This project demonstrates real-world REST API development concepts including JWT authentication, CRUD operations, ownership-based authorization, custom permissions, search, filtering, ordering, pagination, and nested resources.
+This project demonstrates real-world REST API development concepts including JWT authentication, CRUD operations, ownership-based authorization, custom permissions, search, filtering, ordering, pagination, API documentation, and nested resources.
 
 ---
 
 ## ✨ Features
 
-- 🔐 JWT Authentication
-  - Obtain access and refresh tokens
-  - Refresh access tokens
-- 👤 User-based data ownership
-- 📋 Board management
-  - Create, read, update and delete boards
-- 📝 List management
-  - Create, read, update and delete lists
-  - Board → Lists relationship
-- ✅ Task management
-  - Create, read, update and delete tasks
-  - List → Tasks relationship
-- 🔎 Search tasks by title and description
-- 🎯 Filter tasks by status
-- ↕️ Order tasks by fields such as due date and creation date
-- 📄 Pagination
-- 🛡️ Custom permissions
-- 🔒 Ownership protection for Boards, Lists and Tasks
-- 🐍 Dependency management with `uv`
+* 🔐 JWT Authentication
+
+  * Obtain access and refresh tokens
+  * Refresh access tokens
+
+* 👤 User-based data ownership
+
+* 📋 Board management
+
+  * Create, read, update and delete boards
+
+* 📝 List management
+
+  * Create, read, update and delete lists
+  * Board → Lists relationship
+
+* ✅ Task management
+
+  * Create, read, update and delete tasks
+  * List → Tasks relationship
+
+* 🔎 Search tasks by title and description
+
+* 🎯 Filter tasks by status
+
+* ↕️ Order tasks by fields such as due date and creation date
+
+* 📄 Pagination
+
+* 🛡️ Custom permissions
+
+* 🔒 Ownership protection for Boards, Lists and Tasks
+
+* 📚 API documentation using `drf-spectacular`
+
+  * Swagger UI
+  * ReDoc
+  * OpenAPI schema
+
+* 🧪 API testing using Postman
+
+* 🐍 Dependency management with `uv`
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Python | Backend programming language |
-| Django | Web framework |
-| Django REST Framework | REST API development |
-| Simple JWT | JWT authentication |
-| django-filter | API filtering |
-| SQLite | Development database |
-| uv | Python package and dependency management |
-| Postman | API testing and documentation |
+| Technology            | Purpose                                  |
+| --------------------- | ---------------------------------------- |
+| Python                | Backend programming language             |
+| Django                | Web framework                            |
+| Django REST Framework | REST API development                     |
+| Simple JWT            | JWT authentication                       |
+| django-filter         | API filtering                            |
+| drf-spectacular       | OpenAPI / Swagger API documentation      |
+| SQLite                | Development database                     |
+| uv                    | Python package and dependency management |
+| Postman               | API testing                              |
 
 ---
 
@@ -49,6 +73,7 @@ This project demonstrates real-world REST API development concepts including JWT
 
 ```text
 mytrello/
+
 │
 ├── board/
 │   ├── migrations/
@@ -78,6 +103,9 @@ mytrello/
 │   ├── settings.py
 │   ├── urls.py
 │   └── ...
+│
+├── postman/
+│   └── Trello-Clone-API.postman_collection.json
 │
 ├── manage.py
 ├── pyproject.toml
@@ -167,47 +195,64 @@ Authorization: Bearer <access_token>
 ### Boards
 
 ```http
-GET    /api/boards/
-POST   /api/boards/
-GET    /api/boards/<id>/
-PUT    /api/boards/<id>/
-PATCH  /api/boards/<id>/
-DELETE /api/boards/<id>/
+GET     /api/boards/
+
+POST    /api/boards/
+
+GET     /api/boards/<id>/
+
+PUT     /api/boards/<id>/
+
+PATCH   /api/boards/<id>/
+
+DELETE  /api/boards/<id>/
 ```
 
 ### Lists
 
 ```http
-GET    /api/lists/
-POST   /api/lists/
-GET    /api/lists/<id>/
-PUT    /api/lists/<id>/
-PATCH  /api/lists/<id>/
-DELETE /api/lists/<id>/
+GET     /api/lists/
+
+POST    /api/lists/
+
+GET     /api/lists/<id>/
+
+PUT     /api/lists/<id>/
+
+PATCH   /api/lists/<id>/
+
+DELETE  /api/lists/<id>/
 ```
 
 ### Board → Lists
 
 ```http
 GET  /api/boards/<board_id>/lists/
+
 POST /api/boards/<board_id>/lists/
 ```
 
 ### Tasks
 
 ```http
-GET    /api/tasks/
-POST   /api/tasks/
-GET    /api/tasks/<id>/
-PUT    /api/tasks/<id>/
-PATCH  /api/tasks/<id>/
-DELETE /api/tasks/<id>/
+GET     /api/tasks/
+
+POST    /api/tasks/
+
+GET     /api/tasks/<id>/
+
+PUT     /api/tasks/<id>/
+
+PATCH   /api/tasks/<id>/
+
+DELETE  /api/tasks/<id>/
 ```
 
 ### List → Tasks
 
 ```http
 GET  /api/lists/<list_id>/tasks/
+
 POST /api/lists/<list_id>/tasks/
 ```
 
@@ -229,7 +274,9 @@ Available task statuses:
 
 ```text
 todo
+
 in_progress
+
 done
 ```
 
@@ -284,11 +331,14 @@ For example:
 
 ```text
 User A
+
  └── Board A
       └── List A
            └── Task A
 
+
 User B
+
  └── Board B
       └── List B
            └── Task B
@@ -300,12 +350,37 @@ Ownership is enforced through queryset restrictions and custom permission classe
 
 ---
 
+## 📚 API Documentation
+
+The API is documented using **drf-spectacular** and provides OpenAPI-based interactive documentation.
+
+### Swagger UI
+
+```text
+http://127.0.0.1:8000/api/schema/swagger-ui/
+```
+
+### ReDoc
+
+```text
+http://127.0.0.1:8000/api/schema/redoc/
+```
+
+### OpenAPI Schema
+
+```text
+http://127.0.0.1:8000/api/schema/
+```
+
+---
+
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
 
 ```bash
 git clone <your-github-repository-url>
+
 cd mytrello
 ```
 
@@ -321,6 +396,7 @@ This creates/synchronizes the project's virtual environment using:
 
 ```text
 pyproject.toml
+
 uv.lock
 ```
 
@@ -352,7 +428,7 @@ http://127.0.0.1:8000/
 
 ## 🧪 API Testing
 
-The APIs can be tested using **Postman**.
+The APIs can be tested using **Postman** and **Swagger UI**.
 
 Recommended testing flow:
 
@@ -380,53 +456,39 @@ Recommended testing flow:
 11. Test Ownership & Permissions
 ```
 
+---
+
 ## 📦 Postman Collection
 
-A Postman collection is included in the repository for testing all available API endpoints.
+A Postman collection is included in the repository for testing the available API endpoints.
 
 The collection covers:
 
-- 🔐 JWT authentication
-- 📋 Board APIs
-- 📝 List APIs
-- ✅ Task APIs
-- 🔎 Search
-- 🎯 Filtering
-- ↕️ Ordering
-- 📄 Pagination
-- 🛡️ Permissions and ownership
+* 🔐 JWT authentication
+* 📋 Board APIs
+* 📝 List APIs
+* ✅ Task APIs
+* 🔎 Search
+* 🎯 Filtering
+* ↕️ Ordering
+* 📄 Pagination
+* 🛡️ Permissions and ownership
 
 ### Import Collection
 
 1. Open Postman
 2. Click **Import**
 3. Select the Postman collection file from the repository
-4. Obtain a JWT access token using the login/token endpoint
+4. Obtain a JWT access token using the token endpoint
 5. Add the token as a **Bearer Token**
 6. Start testing the APIs
 
-### Recommended Testing Flow
+The Postman collection is located in:
 
 ```text
-Authentication
-      ↓
-Create Board
-      ↓
-Create List
-      ↓
-Create Task
-      ↓
-Search Tasks
-      ↓
-Filter Tasks
-      ↓
-Order Tasks
-      ↓
-Pagination
-      ↓
-Test Permissions
-      ↓
-Test Ownership
+postman/
+└── Trello-Clone-API.postman_collection.json
+```
 
 ---
 
@@ -438,8 +500,11 @@ Make sure files such as these are ignored:
 
 ```text
 .env
+
 .venv/
+
 db.sqlite3
+
 __pycache__/
 ```
 
@@ -449,19 +514,20 @@ __pycache__/
 
 This project was built to practice and demonstrate practical Django REST Framework concepts:
 
-- RESTful API design
-- ViewSets and generic API views
-- Serializers
-- JWT authentication
-- Permissions
-- Object ownership
-- Nested resources
-- Queryset filtering
-- Search
-- Ordering
-- Pagination
-- API testing with Postman
-- Python dependency management with `uv`
+* RESTful API design
+* ViewSets and generic API views
+* Serializers
+* JWT authentication
+* Permissions
+* Object ownership
+* Nested resources
+* Queryset filtering
+* Search
+* Ordering
+* Pagination
+* API documentation with OpenAPI / Swagger
+* API testing with Postman
+* Python dependency management with `uv`
 
 ---
 
@@ -469,15 +535,14 @@ This project was built to practice and demonstrate practical Django REST Framewo
 
 Possible next improvements:
 
-- Serializer validation
-- Custom DRF actions
-- Swagger / OpenAPI documentation
-- Automated API tests
-- Docker support
-- PostgreSQL configuration
-- CI/CD pipeline
-- React frontend
-- Production deployment
+* Serializer validation
+* Custom DRF actions
+* Automated API tests
+* Docker support
+* PostgreSQL configuration
+* CI/CD pipeline
+* React frontend
+* Production deployment
 
 ---
 

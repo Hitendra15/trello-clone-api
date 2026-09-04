@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'list',
     'task',
     'django_filters',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE':10,
+    'DEFAULT_SCHEMA_CLASS':'drf_spectacular.openapi.AutoSchema',
 }
 
 # token will only work for 10 minutes and after that user will have to refresh the token to get a new access token. Refresh token will be valid for 1 day.
@@ -140,4 +142,17 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Trello Clone API',
+    'DESCRIPTION': 'A Trello-inspired task management REST API built with Django REST Framework.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'TAGS': [
+        {'name': 'Authentication'},
+        {'name': 'Boards'},
+        {'name': 'Lists'},
+        {'name': 'Tasks'},
+    ],
 }
