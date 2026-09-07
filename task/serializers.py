@@ -9,12 +9,12 @@ class TaskSerializer(serializers.ModelSerializer):
 
     # validations
     def validate_title(self,value):
-        if len(value.strip()) <= 2:
+        if len(value.strip()) < 2:
             raise serializers.ValidationError("Title must be at least 2 characters long.")
         return value
 
     def validate_description(self,value):
-        if len(value.strip()) <= 5:
+        if len(value.strip()) < 5:
             raise serializers.ValidationError("Description must be at least 5 characters long.")
         return value
 

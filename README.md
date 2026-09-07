@@ -2,54 +2,74 @@
 
 A **Trello-inspired task management REST API** built with **Django REST Framework (DRF)**.
 
-This project demonstrates real-world REST API development concepts including JWT authentication, CRUD operations, ownership-based authorization, custom permissions, search, filtering, ordering, pagination, API documentation, and nested resources.
+This project demonstrates real-world REST API development concepts including JWT authentication, CRUD operations, ownership-based authorization, custom permissions, serializer validation, custom DRF actions, search, filtering, ordering, pagination, API documentation, and nested resources.
 
 ---
 
 ## ✨ Features
 
-* 🔐 JWT Authentication
+* 🔐 **JWT Authentication**
 
   * Obtain access and refresh tokens
   * Refresh access tokens
 
-* 👤 User-based data ownership
+* 👤 **User-based data ownership**
 
-* 📋 Board management
+* 📋 **Board management**
 
   * Create, read, update and delete boards
 
-* 📝 List management
+* 📝 **List management**
 
   * Create, read, update and delete lists
   * Board → Lists relationship
 
-* ✅ Task management
+* ✅ **Task management**
 
   * Create, read, update and delete tasks
   * List → Tasks relationship
+  * Mark tasks as completed using a custom DRF action
+  * Retrieve all completed tasks
 
-* 🔎 Search tasks by title and description
+* ✔️ **Serializer validation**
 
-* 🎯 Filter tasks by status
+  * Title validation
+  * Description validation
+  * Due date validation
 
-* ↕️ Order tasks by fields such as due date and creation date
+* 🔎 **Search tasks**
 
-* 📄 Pagination
+  * Search by title and description
 
-* 🛡️ Custom permissions
+* 🎯 **Filter tasks**
 
-* 🔒 Ownership protection for Boards, Lists and Tasks
+  * Filter by task status
 
-* 📚 API documentation using `drf-spectacular`
+* ↕️ **Order tasks**
+
+  * Order by due date and creation date
+
+* 📄 **Pagination**
+
+  * Page-number pagination
+
+* 🛡️ **Custom permissions**
+
+* 🔒 **Ownership protection**
+
+  * Boards
+  * Lists
+  * Tasks
+
+* 📚 **API documentation using `drf-spectacular`**
 
   * Swagger UI
   * ReDoc
   * OpenAPI schema
 
-* 🧪 API testing using Postman
+* 🧪 **API testing using Postman**
 
-* 🐍 Dependency management with `uv`
+* 🐍 **Dependency management with `uv`**
 
 ---
 
@@ -116,7 +136,7 @@ mytrello/
 
 ---
 
-## 🔗 Data Relationship
+## 🏗️ Data Relationship
 
 The project follows a simple hierarchy:
 
@@ -196,15 +216,10 @@ Authorization: Bearer <access_token>
 
 ```http
 GET     /api/boards/
-
 POST    /api/boards/
-
 GET     /api/boards/<id>/
-
 PUT     /api/boards/<id>/
-
 PATCH   /api/boards/<id>/
-
 DELETE  /api/boards/<id>/
 ```
 
@@ -212,15 +227,10 @@ DELETE  /api/boards/<id>/
 
 ```http
 GET     /api/lists/
-
 POST    /api/lists/
-
 GET     /api/lists/<id>/
-
 PUT     /api/lists/<id>/
-
 PATCH   /api/lists/<id>/
-
 DELETE  /api/lists/<id>/
 ```
 
@@ -228,7 +238,6 @@ DELETE  /api/lists/<id>/
 
 ```http
 GET  /api/boards/<board_id>/lists/
-
 POST /api/boards/<board_id>/lists/
 ```
 
@@ -236,15 +245,10 @@ POST /api/boards/<board_id>/lists/
 
 ```http
 GET     /api/tasks/
-
 POST    /api/tasks/
-
 GET     /api/tasks/<id>/
-
 PUT     /api/tasks/<id>/
-
 PATCH   /api/tasks/<id>/
-
 DELETE  /api/tasks/<id>/
 ```
 
@@ -252,8 +256,106 @@ DELETE  /api/tasks/<id>/
 
 ```http
 GET  /api/lists/<list_id>/tasks/
-
 POST /api/lists/<list_id>/tasks/
+```
+
+---
+
+## ⚡ Custom DRF Actions
+
+Custom DRF actions are used for operations that don't directly fit into standard CRUD operations.
+
+### Mark Task as Done
+
+Marks a specific task as completed.
+
+```http
+POST /api/tasks/<task_id>/mark_done/
+```
+
+Example:
+
+```http
+POST /api/tasks/5/mark_done/
+```
+
+Response:
+
+```json
+{
+    "message": "Task marked as done."
+}
+```
+
+### Get Completed Tasks
+
+Returns all completed tasks belonging to boards owned by the authenticated user.
+
+```http
+GET /api/tasks/completed_task/
+```
+
+Example response:
+
+```json
+[
+    {
+        "id": 1,
+        "title": "Complete project",
+        "status": "done"
+    },
+    {
+        "id": 2,
+        "title": "Deploy API",
+        "status": "done"
+    }
+]
+```
+
+---
+
+## ✔️ Serializer Validation
+
+Task input data is validated at the serializer level.
+
+### Title Validation
+
+The title must contain the minimum required number of characters after removing leading and trailing whitespace.
+
+Example:
+
+```json
+{
+    "title": "D"
+}
+```
+
+Returns a validation error.
+
+### Description Validation
+
+The description must contain the minimum required number of characters after removing leading and trailing whitespace.
+
+### Due Date Validation
+
+The due date cannot be in the past.
+
+Example:
+
+```json
+{
+    "due_date": "2020-01-01T10:00:00Z"
+}
+```
+
+Returns:
+
+```json
+{
+    "due_date": [
+        "Due date cannot be in the past."
+    ]
+}
 ```
 
 ---
@@ -274,9 +376,7 @@ Available task statuses:
 
 ```text
 todo
-
 in_progress
-
 done
 ```
 
@@ -300,7 +400,7 @@ Descending order:
 GET /api/tasks/?ordering=-created_at
 ```
 
-Other supported ordering fields include:
+Supported ordering fields include:
 
 ```text
 due_date
@@ -331,14 +431,12 @@ For example:
 
 ```text
 User A
-
  └── Board A
       └── List A
            └── Task A
 
 
 User B
-
  └── Board B
       └── List B
            └── Task B
@@ -396,7 +494,6 @@ This creates/synchronizes the project's virtual environment using:
 
 ```text
 pyproject.toml
-
 uv.lock
 ```
 
@@ -428,7 +525,7 @@ http://127.0.0.1:8000/
 
 ## 🧪 API Testing
 
-The APIs can be tested using **Postman** and **Swagger UI**.
+The APIs can currently be tested using **Postman** and **Swagger UI**.
 
 Recommended testing flow:
 
@@ -445,15 +542,19 @@ Recommended testing flow:
        ↓
 6. Create Task inside List
        ↓
-7. Test Search
+7. Test Serializer Validation
        ↓
-8. Test Filtering
+8. Test Search
        ↓
-9. Test Ordering
+9. Test Filtering
        ↓
-10. Test Pagination
+10. Test Ordering
        ↓
-11. Test Ownership & Permissions
+11. Test Pagination
+       ↓
+12. Test Custom Actions
+       ↓
+13. Test Ownership & Permissions
 ```
 
 ---
@@ -468,11 +569,13 @@ The collection covers:
 * 📋 Board APIs
 * 📝 List APIs
 * ✅ Task APIs
+* ⚡ Custom task actions
 * 🔎 Search
 * 🎯 Filtering
 * ↕️ Ordering
 * 📄 Pagination
 * 🛡️ Permissions and ownership
+* ✔️ Serializer validation
 
 ### Import Collection
 
@@ -487,6 +590,7 @@ The Postman collection is located in:
 
 ```text
 postman/
+
 └── Trello-Clone-API.postman_collection.json
 ```
 
@@ -500,11 +604,8 @@ Make sure files such as these are ignored:
 
 ```text
 .env
-
 .venv/
-
 db.sqlite3
-
 __pycache__/
 ```
 
@@ -517,9 +618,11 @@ This project was built to practice and demonstrate practical Django REST Framewo
 * RESTful API design
 * ViewSets and generic API views
 * Serializers
+* Serializer validation
 * JWT authentication
 * Permissions
 * Object ownership
+* Custom DRF actions
 * Nested resources
 * Queryset filtering
 * Search
@@ -533,16 +636,14 @@ This project was built to practice and demonstrate practical Django REST Framewo
 
 ## 🚧 Future Improvements
 
-Possible next improvements:
+The following features are planned for future development:
 
-* Serializer validation
-* Custom DRF actions
-* Automated API tests
-* Docker support
-* PostgreSQL configuration
-* CI/CD pipeline
-* React frontend
-* Production deployment
+* 🧪 Automated API tests with Pytest
+* 🐳 Docker & Docker Compose support
+* 🐘 PostgreSQL database configuration
+* 🔄 CI/CD pipeline
+* ⚛️ React frontend integration
+* 🚀 Production deployment
 
 ---
 

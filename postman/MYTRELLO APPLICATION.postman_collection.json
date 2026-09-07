@@ -276,7 +276,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4Nzc1NDY2LCJpYXQiOjE3ODg3NzQ4NjYsImp0aSI6IjE5OWVkYjliOTQ0MDRhZDFiMjQxNWI1ZjVmMjE0NmM2IiwidXNlcl9pZCI6IjEifQ.jHqPZWgy8SAJvJHMUcDCpQp52_7V_g1tQ4f9Pnq7qQ8",
               "type": "string"
             }
           ]
@@ -431,6 +431,83 @@
               "key": "ordering",
               "value": "-due_date"
             }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "MARK STATUS DONE API",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4Nzc1NDY2LCJpYXQiOjE3ODg3NzQ4NjYsImp0aSI6IjE5OWVkYjliOTQ0MDRhZDFiMjQxNWI1ZjVmMjE0NmM2IiwidXNlcl9pZCI6IjEifQ.jHqPZWgy8SAJvJHMUcDCpQp52_7V_g1tQ4f9Pnq7qQ8",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8000/api/tasks/2/mark_done/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tasks",
+            "2",
+            "mark_done",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DISPLAY ALL COMPLETED TASKS",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzg4Nzc1NDY2LCJpYXQiOjE3ODg3NzQ4NjYsImp0aSI6IjE5OWVkYjliOTQ0MDRhZDFiMjQxNWI1ZjVmMjE0NmM2IiwidXNlcl9pZCI6IjEifQ.jHqPZWgy8SAJvJHMUcDCpQp52_7V_g1tQ4f9Pnq7qQ8",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8000/api/tasks/completed_task/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tasks",
+            "completed_task",
+            ""
           ]
         }
       },
