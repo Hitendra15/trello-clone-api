@@ -188,8 +188,16 @@ SPECTACULAR_SETTINGS = {
 
 
 # Production security settings
+# Production security settings
 if not DEBUG:
-    ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+    ALLOWED_HOSTS = [
+        host.strip()
+        for host in os.getenv(
+            "DJANGO_ALLOWED_HOSTS",
+            "trello-clone-api-os77.onrender.com"
+        ).split(",")
+        if host.strip()
+    ]
 
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
