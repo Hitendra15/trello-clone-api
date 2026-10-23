@@ -12,6 +12,9 @@ wheels/
 # Local data and secrets
 db.sqlite3
 .env
+.env.*
+!.env.example
+.venv/
 
 # Node / frontend
 node_modules/
